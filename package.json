@@ -1,0 +1,17 @@
+{
+  "name": "website-mirror-proxy",
+  "version": "1.0.0",
+  "description": "SEO-friendly website mirror proxy for Railway/Render/VPS",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "dependencies": {
+    "express": "^4.21.0",
+    "http-proxy-middleware": "^3.0.3"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
