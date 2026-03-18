@@ -69,12 +69,14 @@ app.get("/googlec813ffdaf2222472.html", (req, res) => {
 app.use((req, res, next) => {
   const ua = req.headers['user-agent'] || '';
   const accept = req.headers['accept'] || '';
+  const isBot = /Googlebot|bingbot|Baiduspider|YandexBot|DuckDuckBot|Slurp|facebookexternalhit|Twitterbot|LinkedInBot|crawler|spider|bot/i.test(ua);
   const isMobile = /Mobile|Android|iPhone|iPad|iPod|webOS|BlackBerry|Opera Mini|IEMobile/i.test(ua);
   const isPageRequest = accept.includes('text/html');
   const path = req.path;
 
   // Redirect mobile browsers to /mobile/ version (HTML pages only)
-  if (isMobile && isPageRequest && !path.startsWith('/mobile') && !path.startsWith('/images') && !path.startsWith('/assets') && path !== '/health') {
+  // Skip bots (Googlebot etc.) to avoid redirect loops & indexing issues
+  if (isMobile && !isBot && isPageRequest && !path.startsWith('/mobile') && !path.startsWith('/images') && !path.startsWith('/assets') && path !== '/health') {
     return res.redirect(302, '/mobile' + path);
   }
 
