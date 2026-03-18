@@ -59,6 +59,9 @@ app.get("/favicon.png", (req, res) => {
 app.get("/favicon.ico", (req, res) => {
   res.type("image/png").sendFile(path.join(__dirname, "favicon.png"));
 });
+app.get("/googlec813ffdaf2222472.html", (req, res) => {
+  res.sendFile(path.join(__dirname, "googlec813ffdaf2222472.html"));
+});
 
 // ============================================================
 // MIDDLEWARE: Mobile device detection & redirect to /mobile/
