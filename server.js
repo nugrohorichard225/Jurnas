@@ -164,6 +164,28 @@ function rewriteHtml(html, mirrorDomain, mirrorProtocol) {
     }
   }
 
+  // 12. Inject Google SWG (Subscribe with Google) script
+  if (!modified.includes('swg-basic.js')) {
+    const swgScript = `
+  <script async type="application/javascript"
+        src="https://news.google.com/swg/js/v1/swg-basic.js"></script>
+  <script>
+    (self.SWG_BASIC = self.SWG_BASIC || []).push( basicSubscriptions => {
+      basicSubscriptions.init({
+        type: "NewsArticle",
+        isPartOfType: ["Product"],
+        isPartOfProductId: "CAowwcvfCw:openaccess",
+        clientOptions: { theme: "light", lang: "id" },
+      });
+    });
+  </script>
+`;
+    const swgIdx = modified.lastIndexOf('</head>');
+    if (swgIdx !== -1) {
+      modified = modified.slice(0, swgIdx) + swgScript + modified.slice(swgIdx);
+    }
+  }
+
   return modified;
 }
 
